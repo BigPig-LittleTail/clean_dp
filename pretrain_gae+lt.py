@@ -2,20 +2,15 @@ import argparse
 
 import torch
 import numpy as np
-from sklearn.cluster import KMeans
 from torch.optim import Adam
 import torch.nn.functional as F
 from torch_geometric.nn import GAE
 from torch_geometric.utils import to_undirected
 
-from model import AE, TopicDataSet, ADAEGCEncoder, DAEGCEncoder
-from sklearn.preprocessing import normalize
-from sklearn.decomposition import NMF
+from model.model import ADAEGCEncoder
 
 from pretrain_ae import nmf
-from utils import construct_edge_index_direction, eva, target_distribution
-
-
+from model.utils import construct_edge_index_direction
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

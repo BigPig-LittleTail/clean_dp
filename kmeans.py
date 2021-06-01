@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 from sklearn.cluster import KMeans
 
-from utils import eva
+from model.utils import eva
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

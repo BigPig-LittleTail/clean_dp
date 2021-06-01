@@ -3,7 +3,7 @@ import torch.nn.functional as F
 
 from torch.optim import Adam
 
-from utils import common_parameter, target_distribution, eva, construct_graph, normalize_adj
+from model.utils import common_parameter, target_distribution, eva, construct_graph, normalize_adj
 
 if __name__ == '__main__':
     parser, args, model, x, y = common_parameter()

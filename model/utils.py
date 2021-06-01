@@ -4,7 +4,7 @@ import torch
 import numpy as np
 from torch_geometric.nn import GAE
 
-from model import IDEC, AIDEC, SDCN, TSDCN, DAEGCEncoder, ADAEGCEncoder
+from .model import IDEC, AIDEC, SDCN, TSDCN, DAEGCEncoder, ADAEGCEncoder
 
 from sklearn.cluster import KMeans
 from sklearn.metrics.cluster import normalized_mutual_info_score as nmi_score

@@ -6,7 +6,7 @@ from torch.optim import Adam
 from torch.utils.data import DataLoader, Dataset
 import torch.nn.functional as F
 
-from model import AE, TopicDataSet
+from model.model import AE, TopicDataSet
 from sklearn.preprocessing import normalize
 from sklearn.decomposition import NMF
 

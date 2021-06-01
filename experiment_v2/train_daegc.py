@@ -1,17 +1,18 @@
+import sys
+import os
 import argparse
-
 import torch
 import numpy as np
+import torch.nn.functional as F
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 from sklearn.cluster import KMeans
 from torch.optim import Adam
-import torch.nn.functional as F
 from torch_geometric.nn import GAE
 from torch_geometric.utils import to_undirected
-
 from model.model import DAEGCEncoder
-
 from model.utils import construct_edge_index_direction, eva, target_distribution
-
 
 
 if __name__ == '__main__':
@@ -20,6 +21,7 @@ if __name__ == '__main__':
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--x_path", type=str, default="")
     parser.add_argument("--y_path", type=str, default="")
+    parser.add_argument("--graph_x_path", type=str, default="")
     parser.add_argument("--pre_path", type=str, default="")
     parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--train_epoch", type=int, default=200)
@@ -50,19 +52,22 @@ if __name__ == '__main__':
     x_path = args.x_path
     y_path = args.y_path
     pre_path = args.pre_path
+    graph_x_path = args.graph_x_path
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     feature = np.loadtxt(x_path, dtype=np.float32)
     y = np.loadtxt(y_path, dtype=np.int32)
+    graph_x = np.loadtxt(graph_x_path, dtype=np.float32)
 
     encoder = DAEGCEncoder(4, 1, 500, input_dim, n_z, n_cluster,
                        att_dropout=0.0, fdd_dropout=0.0)
 
     x = torch.from_numpy(feature)
+    graph_x = torch.from_numpy(graph_x)
 
-    edge_index_direction = torch.from_numpy(construct_edge_index_direction(x)).t().contiguous()
-    edge_index = to_undirected(edge_index_direction, num_nodes=x.shape[0])
+    edge_index_direction = torch.from_numpy(construct_edge_index_direction(graph_x)).t().contiguous()
+    edge_index = to_undirected(edge_index_direction, num_nodes=graph_x.shape[0])
 
     model = GAE(encoder)
     model.load_state_dict(torch.load(pre_path))
@@ -104,4 +109,5 @@ if __name__ == '__main__':
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+
 

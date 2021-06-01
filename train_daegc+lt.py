@@ -8,9 +8,9 @@ import torch.nn.functional as F
 from torch_geometric.nn import GAE
 from torch_geometric.utils import to_undirected
 
-from model import AE, TopicDataSet, ADAEGCEncoder, DAEGCEncoder
+from model.model import ADAEGCEncoder
 
-from utils import construct_edge_index_direction, eva, target_distribution
+from model.utils import construct_edge_index_direction, eva, target_distribution
 
 
 

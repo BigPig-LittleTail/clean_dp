@@ -3,3 +3,7 @@
 /stackoverflow/*
 /THUCNews/*
 /weibo/*
+/prepare/data/*
+/prepare/stanza_model/*
+/experiment_v2/result_v2/*
+/experiment_v2/weibo/*
